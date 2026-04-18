@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>LLM Defense Platform</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0b0f1a;
+color:white;
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+.header{
+text-align:center;
+padding:15px;
+font-size:24px;
+background:#111827;
+border-bottom:1px solid #222;
+}
+
+.chat-container{
+flex:1;
+overflow-y:auto;
+padding:30px;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.user{
+align-self:flex-end;
+background:#2563eb;
+padding:12px 16px;
+border-radius:15px;
+max-width:60%;
+}
+
+.bot{
+align-self:flex-start;
+background:#1f2937;
+padding:12px 16px;
+border-radius:15px;
+max-width:60%;
+}
+
+.typing{
+align-self:flex-start;
+background:#1f2937;
+padding:12px 16px;
+border-radius:15px;
+opacity:0.7;
+font-style:italic;
+}
+
+.dashboard{
+background:#111827;
+border-top:1px solid #222;
+padding:15px;
+font-size:14px;
+}
+
+.input-container{
+display:flex;
+padding:15px;
+background:#111827;
+border-top:1px solid #222;
+}
+
+textarea{
+flex:1;
+resize:none;
+padding:10px;
+border-radius:8px;
+border:none;
+font-size:15px;
+height:50px;
+}
+
+button{
+margin-left:10px;
+padding:10px 20px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+🛡️ LLM Defense Platform
+</div>
+
+<div class="chat-container" id="chat"></div>
+
+<div class="dashboard" id="dashboard">
+Security Dashboard
+</div>
+
+<div class="input-container">
+
+<textarea
+id="promptBox"
+placeholder="Ask what you want..."
+></textarea>
+
+<button onclick="sendPrompt()">Send</button>
+
+</div>
+
+
+<script>
+
+const chat = document.getElementById("chat")
+const textbox = document.getElementById("promptBox")
+const dashboard = document.getElementById("dashboard")
+
+textbox.focus()
+
+let processing = false
+
+
+function addUserBubble(text){
+
+let bubble = document.createElement("div")
+bubble.className="user"
+bubble.innerText=text
+chat.appendChild(bubble)
+
+}
+
+
+function addTyping(){
+
+let bubble = document.createElement("div")
+bubble.className="typing"
+bubble.id="typing"
+bubble.innerText="Thinking..."
+chat.appendChild(bubble)
+
+}
+
+
+function removeTyping(){
+
+let typing=document.getElementById("typing")
+if(typing) typing.remove()
+
+}
+
+
+function addBotBubble(text){
+
+let bubble=document.createElement("div")
+bubble.className="bot"
+bubble.innerText=text
+chat.appendChild(bubble)
+
+}
+
+
+async function sendPrompt(){
+
+if(processing) return
+
+let prompt=textbox.value.trim()
+
+if(prompt==="") return
+
+processing = true
+textbox.disabled = true
+
+textbox.value=""
+
+addUserBubble(prompt)
+
+addTyping()
+dashboard.innerHTML =
+"Security Dashboard<br>"+
+"Status: Analyzing...<br>"+
+"Risk Score: Calculating..."
+
+chat.scrollTop=chat.scrollHeight
+
+try{
+
+let response=await fetch("/chat",{
+
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({prompt:prompt})
+
+})
+
+let data=await response.json()
+let result = data.result
+
+removeTyping()
+
+if(result.status==="SAFE"){
+addBotBubble(result.response)
+}
+else{
+addBotBubble("⚠️ Request blocked\n\nReason: "+result.reason)
+}
+
+dashboard.innerHTML=
+"Security Dashboard<br>"+
+"Status: "+result.status+"<br>"+
+"Risk Score: "+result.risk_score
+
+}catch(error){
+
+removeTyping()
+addBotBubble("⚠️ Server error")
+
+}
+
+textbox.disabled=false
+textbox.focus()
+processing=false
+
+chat.scrollTop=chat.scrollHeight
+
+}
+
+let history = []
+
+function addUserBubble(text){
+
+history.push({role:"user",text:text})
+
+let bubble = document.createElement("div")
+bubble.className="user"
+bubble.innerText=text
+chat.appendChild(bubble)
+
+}
+
+function addBotBubble(text){
+
+history.push({role:"bot",text:text})
+
+let bubble=document.createElement("div")
+bubble.className="bot"
+bubble.innerText=text
+chat.appendChild(bubble)
+
+}
+
+/* ENTER SEND */
+
+textbox.addEventListener("keydown",function(e){
+
+if(e.key==="Enter" && !e.shiftKey){
+e.preventDefault()
+sendPrompt()
+}
+
+})
+
+</script>
+
+</body>
+</html>
