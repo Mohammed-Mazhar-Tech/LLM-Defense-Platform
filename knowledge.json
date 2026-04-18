@@ -1,0 +1,22 @@
+{
+  "cybersecurity": "Cybersecurity is the practice of protecting systems, networks, and digital information from cyber attacks, unauthorized access, and damage.",
+  "artificial intelligence": "Artificial Intelligence is a field of computer science focused on creating machines capable of performing tasks that normally require human intelligence, such as learning, reasoning, and decision making.",
+  "machine learning": "Machine learning is a subset of artificial intelligence where algorithms learn patterns from data and improve their performance over time without being explicitly programmed.",
+  "deep learning": "Deep learning is a specialized branch of machine learning that uses neural networks with multiple layers to learn complex patterns in large datasets.",
+  "large language model": "A large language model is an artificial intelligence system trained on massive amounts of text data to understand and generate human-like language.",
+  "prompt engineering": "Prompt engineering is the process of designing and optimizing prompts to guide the output of large language models toward desired results.",
+  "prompt injection": "Prompt injection is a security attack where malicious instructions are inserted into prompts to manipulate or override the intended behavior of a language model.",
+  "jailbreak attack": "A jailbreak attack attempts to bypass the safety restrictions of a large language model by tricking it into ignoring its rules or safeguards.",
+  "llm security": "LLM security focuses on protecting large language models from adversarial prompts, data leakage, jailbreak attacks, and malicious manipulation.",
+  "data science": "Data science is the field that combines statistics, machine learning, and data analysis techniques to extract meaningful insights from data.",
+  "natural language processing": "Natural language processing is a branch of artificial intelligence that enables computers to understand, interpret, and generate human language.",
+  "quantum computing": "Quantum computing is a new computing paradigm that uses quantum bits or qubits to perform complex calculations much faster than classical computers for certain problems.",
+  "blockchain": "Blockchain is a distributed digital ledger that securely records transactions across multiple computers in a way that prevents modification or tampering.",
+  "cloud computing": "Cloud computing provides computing resources such as servers, storage, and applications over the internet instead of using local hardware.",
+  "internet": "The internet is a global network of interconnected computers that communicate with each other using standard networking protocols.",
+  "programming": "Programming is the process of writing instructions in a programming language so that a computer can perform specific tasks.",
+  "python": "Python is a popular high-level programming language widely used for artificial intelligence, machine learning, data science, and web development.",
+  "neural networks": "Neural networks are machine learning models inspired by the human brain that consist of interconnected nodes used to recognize patterns in data.",
+  "information security": "Information security involves protecting digital information from unauthorized access, disclosure, alteration, or destruction.",
+  "cyber attack": "A cyber attack is an attempt by hackers or malicious actors to gain unauthorized access to computer systems, networks, or data."
+}
